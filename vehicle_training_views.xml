@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_vehicle_training_tree" model="ir.ui.view">
+        <field name="name">vehicle.training.tree</field>
+        <field name="model">vehicle.training</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="vehicle_type"/>
+                <field name="trainer"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_vehicle_training_form" model="ir.ui.view">
+        <field name="name">vehicle.training.form</field>
+        <field name="model">vehicle.training</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="vehicle_type"/>
+                        <field name="trainer"/>
+                        <field name="date"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_vehicle_training_root" name="Training Kendaraan"/>
+    <menuitem id="menu_vehicle_training" name="Training" parent="menu_vehicle_training_root"/>
+
+    <record id="action_vehicle_training" model="ir.actions.act_window">
+        <field name="name">Training Kendaraan</field>
+        <field name="res_model">vehicle.training</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_vehicle_training_list" name="Daftar Training"
+              parent="menu_vehicle_training" action="action_vehicle_training"/>
+</odoo>

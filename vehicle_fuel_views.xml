@@ -1,0 +1,339 @@
+<odoo>
+    <!-- Kanban View Data Kendaraan -->
+    <record id="view_vehicle_data_kanban" model="ir.ui.view">
+        <field name="name">vehicle.data.kanban</field>
+        <field name="model">vehicle.data</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="company_id">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <img t-if="record.image.raw_value" t-att-src="'/web/image/vehicle.data/' + record.id.raw_value + '/image'" class="oe_kanban_image" style="max-width:60px;max-height:60px;"/>
+                            </div>
+                            <div>
+                                <strong><field name="license_plate"/></strong> : <field name="name"/>
+                                <br/>
+                                <field name="company_id"/>
+                                <br/>
+                                <field name="division"/>
+                                <br/>
+                                <field name="location"/>
+                                <br/>
+                                <field name="vehicle_type"/> | <field name="year"/>
+                                <br/>
+                                <field name="driver"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View Data Kendaraan -->
+    <record id="view_vehicle_data_form" model="ir.ui.view">
+        <field name="name">vehicle.data.form</field>
+        <field name="model">vehicle.data</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                    </group>
+                    <group>
+                        <field name="name" placeholder="misal. Avanza G" required="1"/>
+                        <field name="license_plate" placeholder="misal. B 123 IGU" required="1"/>
+                    </group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="division"/>
+                        <field name="location"/>
+                        <field name="vehicle_type"/>
+                        <field name="year" placeholder="misal. 09-2015 (Bulan-Tahun)"/>
+                    </group>
+                    <group string="General Informasi">
+                        <field name="driver"/>
+                        <field name="chassis_number"/>
+                        <field name="engine_number"/>
+                        <field name="last_odometer"/>
+                        <field name="fuel_type"/>
+                        <field name="transmission"/>
+                        <field name="purchase_date"/>
+                        <field name="price"/>
+                    </group>
+                    <group string="Informasi Tambahan">
+                        <field name="seats"/>
+                        <field name="doors"/>
+                        <field name="color"/>
+                    </group>
+                    <group string="Informasi Biaya">
+                        <field name="total_cost" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Contracts">
+                            <field name="contract_ids">
+                                <list>
+                                    <field name="contract_number"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="partner_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Costs">
+                            <field name="cost_ids">
+                                <list>
+                                    <field name="cost_type"/>
+                                    <field name="amount"/>
+                                    <field name="date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Services">
+                            <field name="service_ids">
+                                <list>
+                                    <field name="service_type"/>
+                                    <field name="date"/>
+                                    <field name="cost"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Fuel">
+                            <field name="fuel_ids">
+                                <list>
+                                    <field name="fuel_type"/>
+                                    <field name="liter"/>
+                                    <field name="date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Odometer">
+                            <field name="odometer_ids">
+                                <list>
+                                    <field name="odometer_value"/>
+                                    <field name="date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vehicle_data_list" model="ir.ui.view">
+        <field name="name">vehicle.data.list</field>
+        <field name="model">vehicle.data</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="license_plate"/>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="division"/>
+                <field name="vehicle_type"/>
+                <field name="year"/>
+                <field name="driver"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action dan Menu Data Kendaraan -->
+    <record id="action_vehicle_data" model="ir.actions.act_window">
+        <field name="name">Data Kendaraan</field>
+        <field name="res_model">vehicle.data</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+    <menuitem id="menu_vehicle_data_main" name="Data Kendaraan" sequence="1"/>
+    <menuitem id="menu_vehicle_data" name="Data Kendaraan" parent="menu_vehicle_data_main" action="action_vehicle_data" sequence="2"/>
+    <menuitem id="menu_vehicle_contract" name="Kontrak Kendaraan" parent="menu_vehicle_data_main" action="action_vehicle_contract" sequence="3"/>
+    <menuitem id="menu_vehicle_odometer" name="Odometer Kendaraan" parent="menu_vehicle_data_main" action="action_vehicle_odometer" sequence="4"/>
+    <menuitem id="menu_vehicle_fuel" name="Bahan Bakar Kendaraan" parent="menu_vehicle_data_main" action="action_vehicle_fuel" sequence="5"/>
+    <menuitem id="menu_vehicle_service" name="Service Kendaraan" parent="menu_vehicle_data_main" action="action_vehicle_service" sequence="6"/>
+
+    <!-- Views, Action, Menu untuk Kontrak Kendaraan -->
+    <record id="view_vehicle_contract_form" model="ir.ui.view">
+        <field name="name">vehicle.contract.form</field>
+        <field name="model">vehicle.contract</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="contract_number"/>
+                        <field name="vehicle_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="partner_id"/>
+                        <field name="notes"/>
+                        <field name="attachment" widget="binary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_vehicle_contract_list" model="ir.ui.view">
+        <field name="name">vehicle.contract.list</field>
+        <field name="model">vehicle.contract</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="contract_number"/>
+                <field name="vehicle_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="partner_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_vehicle_contract" model="ir.actions.act_window">
+        <field name="name">Kontrak Kendaraan</field>
+        <field name="res_model">vehicle.contract</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Views, Action, Menu untuk Odometer Kendaraan -->
+    <record id="view_vehicle_odometer_form" model="ir.ui.view">
+        <field name="name">vehicle.odometer.form</field>
+        <field name="model">vehicle.odometer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="odometer_value"/>
+                        <field name="date"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_vehicle_odometer_list" model="ir.ui.view">
+        <field name="name">vehicle.odometer.list</field>
+        <field name="model">vehicle.odometer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="vehicle_id"/>
+                <field name="odometer_value"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_vehicle_odometer" model="ir.actions.act_window">
+        <field name="name">Odometer Kendaraan</field>
+        <field name="res_model">vehicle.odometer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Views, Action, Menu untuk Bahan Bakar Kendaraan -->
+    <record id="view_vehicle_fuel_form" model="ir.ui.view">
+        <field name="name">vehicle.fuel.form</field>
+        <field name="model">vehicle.fuel</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="fuel_type"/>
+                        <field name="liter"/>
+                        <field name="price_per_liter"/>
+                        <field name="total_price"/>
+                        <field name="date"/>
+                        <field name="vendor_id"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_vehicle_fuel_list" model="ir.ui.view">
+        <field name="name">vehicle.fuel.list</field>
+        <field name="model">vehicle.fuel</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="vehicle_id"/>
+                <field name="fuel_type"/>
+                <field name="liter"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_vehicle_fuel" model="ir.actions.act_window">
+        <field name="name">Bahan Bakar Kendaraan</field>
+        <field name="res_model">vehicle.fuel</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Views, Action, Menu untuk Service Kendaraan -->
+    <record id="view_vehicle_service_form" model="ir.ui.view">
+        <field name="name">vehicle.service.form</field>
+        <field name="model">vehicle.service</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="service_type"/>
+                        <field name="date"/>
+                        <field name="vendor_id"/>
+                        <field name="cost"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_vehicle_service_list" model="ir.ui.view">
+        <field name="name">vehicle.service.list</field>
+        <field name="model">vehicle.service</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="vehicle_id"/>
+                <field name="service_type"/>
+                <field name="date"/>
+                <field name="cost"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_vehicle_service" model="ir.actions.act_window">
+        <field name="name">Service Kendaraan</field>
+        <field name="res_model">vehicle.service</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_vehicle_cost_list" model="ir.ui.view">
+        <field name="name">vehicle.cost.list</field>
+        <field name="model">vehicle.cost</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="vehicle_id"/>
+                <field name="cost_type"/>
+                <field name="amount"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vehicle_cost_form" model="ir.ui.view">
+        <field name="name">vehicle.cost.form</field>
+        <field name="model">vehicle.cost</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="cost_type"/>
+                        <field name="amount"/>
+                        <field name="date"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_vehicle_cost" model="ir.actions.act_window">
+        <field name="name">Biaya-biaya Kendaraan</field>
+        <field name="res_model">vehicle.cost</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_vehicle_cost" name="Biaya-biaya Kendaraan" parent="menu_vehicle_data_main" action="action_vehicle_cost" sequence="7"/>
+</odoo>

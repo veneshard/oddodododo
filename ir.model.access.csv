@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_training_user,vehicle.training.user,model_vehicle_training,base.group_user,1,1,1,1
+access_vehicle_data,access.vehicle.data,model_vehicle_data,base.group_user,1,1,1,1
+access_vehicle_contract,access.vehicle.contract,model_vehicle_contract,base.group_user,1,1,1,1
+access_vehicle_odometer,access.vehicle.odometer,model_vehicle_odometer,base.group_user,1,1,1,1
+access_vehicle_fuel,access.vehicle.fuel,model_vehicle_fuel,base.group_user,1,1,1,1
+access_vehicle_service,access.vehicle.service,model_vehicle_service,base.group_user,1,1,1,1
+access_vehicle_cost,access.vehicle.cost,model_vehicle_cost,base.group_user,1,1,1,1
